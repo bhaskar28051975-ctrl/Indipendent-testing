@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bhaskar Travels</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .title-text { font-size: clamp(1.4rem, 6vw, 2rem); font-weight: 900; letter-spacing: 0.05em; }
+        .phone-text { font-size: clamp(1.1rem, 5vw, 1.5rem); font-weight: bold; }
+        .popup-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100; align-items: center; justify-content: center; padding: 15px; }
+        .popup-active { display: flex; }
+        #google_translate_element, .skiptranslate, .goog-te-banner-frame { display: none !important; }
+        body { top: 0px !important; }
+    </style>
+</head>
+<body class="bg-gray-100 overflow-x-hidden">
+
+    <div id="google_translate_element"></div>
+
+    <header class="bg-[#003399] text-white p-4 border-b-4 border-yellow-400 shadow-md">
+        <div class="flex items-center justify-center gap-3">
+            <img src="YOUR_LOGO_URL_HERE" class="w-14 h-14 object-cover rounded border-2 border-white shadow-sm">
+            <div class="text-center">
+                <h1 class="title-text uppercase notranslate">BHASKAR TRAVELS</h1>
+                <p class="phone-text text-yellow-300 mt-1 notranslate">9154095125</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="bg-gray-900 p-2 flex flex-wrap justify-center gap-2 sticky top-0 z-40 shadow-md">
+        <button onclick="changeLang('en')" class="bg-white text-black px-3 py-2 rounded-md font-bold text-xs uppercase notranslate">English</button>
+        <button onclick="changeLang('te')" class="bg-white text-black px-3 py-2 rounded-md font-bold text-xs uppercase notranslate">Telugu</button>
+        <button onclick="changeLang('ta')" class="bg-white text-black px-3 py-2 rounded-md font-bold text-xs uppercase notranslate">Tamil</button>
+        <button onclick="changeLang('kn')" class="bg-white text-black px-3 py-2 rounded-md font-bold text-xs uppercase notranslate">Kannada</button>
+        <button onclick="changeLang('mr')" class="bg-white text-black px-3 py-2 rounded-md font-bold text-xs uppercase notranslate">Marathi</button>
+    </div>
+
+    <section class="bg-[#cc0000] text-white flex items-center p-4 mb-4 shadow-lg">
+        <div class="w-[35%] text-center">
+            <img src="YOUR_DRIVER_IMAGE_URL" class="w-full aspect-square object-cover border-2 border-white rounded-lg shadow-sm">
+        </div>
+        <div class="w-[65%] pl-5 font-bold space-y-1">
+            <p class="uppercase text-yellow-300 text-xl border-b border-red-400 pb-1 mb-1 notranslate">BHASKAR</p>
+            <p class="text-[16px] notranslate">Taxi: <span>AP04 2435</span></p>
+            <p class="text-[16px] notranslate">Model: TATA SUMO</p>
+            <p class="text-[16px] notranslate">Cap: 7+1</p>
+        </div>
+    </section>
+
+    <main class="px-4 pb-24 space-y-6">
+        <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
+            <img src="TOUR_IMAGE_1" class="w-full h-52 object-cover">
+            <div class="p-5">
+                <h2 class="text-[24px] font-black uppercase text-blue-900 mb-2 leading-tight">Tirumala Darshan</h2>
+                <p class="text-gray-700 desc-text mb-5 line-clamp-3">Full day trip to Tirumala temple including local sightseeing.</p>
+                <div class="flex gap-3">
+                    <button onclick="openPop('Tirumala Darshan', 'Full day trip to Tirumala temple including local sightseeing.', 'TOUR_IMAGE_1')" class="flex-1 bg-green-600 text-white font-black py-4 rounded-lg text-[14px] uppercase shadow-md notranslate">VIEW DETAILS</button>
+                    <a href="https://wa.me/919154095125" class="flex-1 bg-green-600 text-white font-black py-4 rounded-lg text-[14px] text-center uppercase shadow-md notranslate">WHATSAPP</a>
+                </div>
+            </div>
+        </div>
+        
+        </main>
+
+    <div id="popup-box" class="popup-overlay">
+        <div class="bg-white w-full max-w-sm rounded-2xl overflow-hidden relative shadow-2xl">
+            <button onclick="closePopup()" class="absolute top-3 right-3 bg-red-600 text-white w-10 h-10 rounded-full font-bold z-50 shadow-lg text-xl">✕</button>
+            <img id="pop-img" src="" class="w-full h-56 object-cover">
+            <div class="p-5">
+                <h2 id="pop-title" class="text-2xl font-black text-blue-900 mb-3 uppercase leading-tight"></h2>
+                <div id="pop-desc" class="text-gray-800 desc-text max-h-64 overflow-y-auto whitespace-pre-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+        }
+        function changeLang(langCode) {
+            var selectField = document.querySelector("select.goog-te-combo");
+            if (selectField) {
+                selectField.value = langCode;
+                selectField.dispatchEvent(new Event('change'));
+            } else {
+                googleTranslateElementInit();
+                setTimeout(function() { changeLang(langCode); }, 500);
+            }
+        }
+        window.openPop = (t, d, i) => {
+            document.getElementById('pop-title').innerText = t;
+            document.getElementById('pop-desc').innerText = d;
+            document.getElementById('pop-img').src = i;
+            document.getElementById('popup-box').classList.add('popup-active');
+        };
+        window.closePopup = () => document.getElementById('popup-box').classList.remove('popup-active');
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
